@@ -1,0 +1,226 @@
+########################################################################
+#                              Font                                    #
+########################################################################
+font pango:monospace 12
+
+########################################################################
+#                            Keyboard                                  #
+########################################################################
+exec setxkbmap "us,ru" ",winkeys" "grp:alt_shift_toggle,grp_led:scroll" &
+
+########################################################################
+#                              Sound                                   #
+########################################################################
+bindsym Mod4+KP_Add exec amixer set Master 3%+
+bindsym Mod4+KP_Subtract exec amixer set Master 3%-
+bindsym Mod4+KP_0 exec amixer set Master toggle
+
+########################################################################
+#                           Screenshots                                #
+########################################################################
+#bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+bindsym Print exec --no-startup-id flameshot gui
+
+########################################################################
+#                               Exit                                   #
+########################################################################
+set $mode_system System (l) lock, (e) exit, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown 
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3lock
+    bindsym e exec --no-startup-id i3-msg exit
+    bindsym u exec --no-startup-id systemctl suspend
+    bindsym h exec --no-startup-id systemctl hibernate
+    bindsym r exec --no-startup-id systemctl reboot
+    bindsym s exec --no-startup-id systemctl poweroff
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym Mod4+Pause mode "$mode_system"
+
+########################################################################
+#                              Reload                                  #
+########################################################################
+# Reload the configuration file
+bindsym Mod4+Shift+c reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod4+Shift+r restart
+
+########################################################################
+#                             Hotkeys                                  #
+########################################################################
+# dmenu (a program launcher)
+bindsym Mod4+d exec dmenu_run
+# terminal
+bindsym Mod4+Return exec xfce4-terminal
+# chrome
+bindsym Mod4+F1 exec google-chrome-stable
+# appfinder
+bindsym Mod4+F2 exec xfce4-appfinder
+# file manager thunar
+bindsym Mod4+F3 exec thunar &
+# pamac store
+bindsym Mod4+F4 exec pamac-manager &
+# change to lower resolution
+bindsym Mod4+F5 exec xrandr --output HDMI-0 --mode 2560x1440
+# change to higher resolution
+bindsym Mod4+F6 exec xrandr --output HDMI-0 --mode 5120x1440
+# start TradeStation
+bindsym Mod4+F7 exec /home/max/Jts/tws
+
+########################################################################
+#                        Workspace settings                            #
+########################################################################
+# Autostart
+exec --no-startup-id google-chrome-stable
+exec --no-startup-id telegram-desktop
+exec --no-startup-id slack
+exec --no-startup-id prospect-mail
+exec --no-startup-id teams-for-linux
+exec --no-startup-id zoom-client
+exec --no-startup-id pycharm-professional
+# exec --no-startup-id /home/max/Jts/tws
+# exec --no-startup-id dbeaver
+# Assign workspaces
+assign  [class="Google-chrome-stable"]       1
+assign  [class="jetbrains-pycharm"]          1
+assign  [class="TelegramDesktop"]            2
+assign  [class="Slack"]                      2
+assign  [class="teams-for-linux"]            2
+assign  [class="zenity"]  	             2
+assign  [class="zoom"]                       3
+assign  [class="Prospect Mail"]              3
+assign  [class="DBeaver"]                    4
+assign  [class="install4j-jclient-Launcher"] 5
+# Switch to workspace
+bindsym Mod4+1 workspace 1
+bindsym Mod4+2 workspace 2
+bindsym Mod4+3 workspace 3
+bindsym Mod4+4 workspace 4
+bindsym Mod4+5 workspace 5
+bindsym Mod4+6 workspace 6
+bindsym Mod4+7 workspace 7
+bindsym Mod4+8 workspace 8
+bindsym Mod4+9 workspace 9
+bindsym Mod4+0 workspace 10
+# Move focused container to workspace
+bindsym Mod4+Shift+1 move container to workspace 1
+bindsym Mod4+Shift+2 move container to workspace 2
+bindsym Mod4+Shift+3 move container to workspace 3
+bindsym Mod4+Shift+4 move container to workspace 4
+bindsym Mod4+Shift+5 move container to workspace 5
+bindsym Mod4+Shift+6 move container to workspace 6
+bindsym Mod4+Shift+7 move container to workspace 7
+bindsym Mod4+Shift+8 move container to workspace 8
+bindsym Mod4+Shift+9 move container to workspace 9
+bindsym Mod4+Shift+0 move container to workspace 10
+
+########################################################################
+#                       Containers settings                            #
+########################################################################
+# Change focus
+bindsym Mod4+Left focus left
+bindsym Mod4+Down focus down
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+# Move focused window
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+# Split in horizontal orientation
+bindsym Mod4+h split h
+# Split in vertical orientation
+bindsym Mod4+v split v
+# Kill focused window
+bindsym Mod4+q kill
+# toggle tiling / floating
+bindsym Mod4+Shift+space floating toggle
+# change focus between tiling / floating windows
+bindsym Mod4+space focus mode_toggle
+# Use Mouse+Mod4 to drag floating windows to their wanted position
+floating_modifier Mod4
+# Enter fullscreen mode for the focused container
+bindsym Mod4+f fullscreen toggle
+# Change container layout (stacked, tabbed, toggle split)
+bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+e layout toggle split
+# Focus the parent container
+#bindsym Mod4+a focus parent
+# Focus the child container
+#bindsym Mod4+d focus child
+# Move the currently focused window to the scratchpad
+bindsym Mod4+Shift+minus move scratchpad
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod4+minus scratchpad show
+
+########################################################################
+#                       Containers resizing                            #
+########################################################################
+# Resize window
+mode "resize" {
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym Mod4+r mode "resize"
+
+########################################################################
+#                       Containers resizing                            #
+########################################################################
+mode "move" {
+	bindsym $mod+Tab focus right
+
+        bindsym Left  move left
+	bindsym Down  move down
+	bindsym Up    move up
+	bindsym Right move right
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym Mod4+m mode "move" focus floating
+
+########################################################################
+#                                Bar                                   #
+########################################################################
+bar {
+	position top
+        status_command i3status
+	font pango:DejaVu Sans Mono 10
+}
+#        colors {
+#                background #002b36
+#                statusline #eee8d5
+#                separator #93a1a1
+#                # colorclass       <border> <background> <text>
+#                focused_workspace  #268bd2  #2aa198     #fdf6e3
+#                inactive_workspace #586e75  #073642     #eee8d5
+#
+#        }
+#}
+#
+#
+## class                 border  backgr. text    indicator child_border
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.background       #ffffff
+#########################################################################
+#####
+#####                   AUTOLOAD
+#####
+#########################################################################
+exec xrandr --output HDMI-0 --mode 5120x1440
+exec xrandr --output DP-0 --off
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+## network
+exec nm-applet &
